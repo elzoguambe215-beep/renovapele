@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState, type FormEvent } from "react";
-import { ArrowRight, Check, ChevronDown, Clock3, Heart, Menu, Minus, Plus, ShieldCheck, ShoppingBag, Sparkles, Truck, X } from "lucide-react";
+import { ArrowRight, Check, ChevronDown, Clock3, Menu, Minus, Plus, ShieldCheck, ShoppingBag, Sparkles, Truck, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import productImage from "@/assets/arbutin-cream.png.asset.json";
@@ -59,7 +59,7 @@ function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [pending, setPending] = useState(false);
-  const [orderId, setOrderId] = useState<string | null>(null);
+  const [orderSent, setOrderSent] = useState(false);
   const [error, setError] = useState("");
   const openCheckout = () => { setError(""); setCheckoutOpen(true); };
 
@@ -88,15 +88,13 @@ function Index() {
       setPending(false);
       return;
     }
-    const { data, error: saveError } = await supabase.from("orders").insert({
+    const { error: saveError } = await supabase.from("orders").insert({
       full_name: fullName, phone, address, city, quantity, delivery_time: deliveryTime, notes,
-    }).select("id").single();
-    if (saveError || !data) {
-      // Orders are intentionally write-only for visitors: a successful insert cannot be read back.
-      // The insert below uses a separate request with no returning representation.
+    });
+    if (saveError) {
       setError("Não foi possível enviar o pedido. Tente novamente.");
     } else {
-      setOrderId(data.id);
+      setOrderSent(true);
     }
     setPending(false);
   }
@@ -165,8 +163,8 @@ function Index() {
 
       {checkoutOpen && <div className="fixed inset-0 z-50 flex items-end justify-center bg-deep/70 sm:items-center sm:p-5" onMouseDown={(event) => { if (event.target === event.currentTarget) setCheckoutOpen(false); }}>
         <div role="dialog" aria-modal="true" aria-labelledby="checkout-title" className="max-h-[94dvh] w-full max-w-xl overflow-y-auto rounded-t-lg bg-background shadow-2xl sm:max-h-[90vh] sm:rounded-md">
-          <div className="sticky top-0 z-10 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 border-b border-line bg-background px-5 py-4 sm:px-7"><div className="min-w-0"><p className="text-[10px] font-bold uppercase tracking-[0.14em] text-primary">Drop Moz</p><h2 id="checkout-title" className="truncate text-xl font-bold">{orderId ? "Pedido recebido" : "Finalize seu pedido"}</h2></div><Button variant="ghost" size="icon" className="shrink-0" aria-label="Fechar" onClick={() => setCheckoutOpen(false)}><X /></Button></div>
-          {orderId ? <div className="px-6 py-12 text-center sm:px-8"><div className="mx-auto flex size-14 items-center justify-center rounded-full bg-blush text-primary"><Check className="size-7" /></div><h3 className="mt-5 text-2xl font-bold">Pedido enviado com sucesso!</h3><p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-muted-foreground">Recebemos o seu pedido. O pagamento será feito na entrega.</p><p className="mt-4 text-xs text-muted-foreground">Referência: {orderId.slice(0, 8).toUpperCase()}</p><Button className="mt-7 h-11 px-8" onClick={() => setCheckoutOpen(false)}>Continuar</Button></div> : <form onSubmit={submitOrder} className="space-y-5 px-5 py-6 sm:px-7">
+          <div className="sticky top-0 z-10 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 border-b border-line bg-background px-5 py-4 sm:px-7"><div className="min-w-0"><p className="text-[10px] font-bold uppercase tracking-[0.14em] text-primary">Drop Moz</p><h2 id="checkout-title" className="truncate text-xl font-bold">{orderSent ? "Pedido recebido" : "Finalize seu pedido"}</h2></div><Button variant="ghost" size="icon" className="shrink-0" aria-label="Fechar" onClick={() => setCheckoutOpen(false)}><X /></Button></div>
+          {orderSent ? <div className="px-6 py-12 text-center sm:px-8"><div className="mx-auto flex size-14 items-center justify-center rounded-full bg-blush text-primary"><Check className="size-7" /></div><h3 className="mt-5 text-2xl font-bold">Pedido enviado com sucesso!</h3><p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-muted-foreground">Recebemos o seu pedido. O pagamento será feito na entrega.</p><Button className="mt-7 h-11 px-8" onClick={() => setCheckoutOpen(false)}>Continuar</Button></div> : <form onSubmit={submitOrder} className="space-y-5 px-5 py-6 sm:px-7">
             <div className="flex items-center justify-between border-b border-line pb-4"><div><p className="text-sm font-bold">Arbutin 7.0 + TXA 4.0 Cream</p><p className="text-xs text-muted-foreground">50 g · Pagamento na entrega</p></div><strong className="text-lg">{formatPrice(price * quantity)}</strong></div>
             <div className="grid gap-4 sm:grid-cols-2"><label className="block text-xs font-bold">Nome completo <input name="fullName" autoComplete="name" required minLength={2} maxLength={120} placeholder="O seu nome" className="mt-2 h-11 w-full rounded-sm border border-input bg-background px-3 text-sm font-normal outline-none focus:border-primary" /></label><label className="block text-xs font-bold">Telefone <input name="phone" type="tel" autoComplete="tel" inputMode="tel" required minLength={8} maxLength={30} placeholder="O seu número" className="mt-2 h-11 w-full rounded-sm border border-input bg-background px-3 text-sm font-normal outline-none focus:border-primary" /></label></div>
             <label className="block text-xs font-bold">Endereço <input name="address" autoComplete="street-address" required minLength={5} maxLength={300} placeholder="Rua, casa, bairro" className="mt-2 h-11 w-full rounded-sm border border-input bg-background px-3 text-sm font-normal outline-none focus:border-primary" /></label>
