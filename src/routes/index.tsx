@@ -3,6 +3,7 @@ import { useEffect, useState, type FormEvent } from "react";
 import { ArrowRight, Check, ChevronDown, Clock3, Menu, Minus, Plus, ShieldCheck, ShoppingBag, Sparkles, Truck, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
+import { sendOrderEmail } from "@/lib/order-email.functions";
 import productImage from "@/assets/arbutin-cream.png.asset.json";
 import productVideo from "@/assets/arbutin-video.mp4.asset.json";
 
@@ -88,13 +89,15 @@ function Index() {
       setPending(false);
       return;
     }
-    const { error: saveError } = await supabase.from("orders").insert({
-      full_name: fullName, phone, address, city, quantity, delivery_time: deliveryTime, notes,
-    });
-    if (saveError) {
-      setError("Não foi possível enviar o pedido. Tente novamente.");
-    } else {
+    try {
+      const result = await sendOrderEmail({ data: { fullName, phone, address, city, quantity, deliveryTime: deliveryTime as (typeof deliveryOptions)[number] } });
+      if (!result.ok) throw new Error("email failed");
+      await supabase.from("orders").insert({
+        full_name: fullName, phone, address, city, quantity, delivery_time: deliveryTime, notes,
+      });
       setOrderSent(true);
+    } catch {
+      setError("Ocorreu um problema ao enviar o pedido. Tente novamente.");
     }
     setPending(false);
   }
