@@ -106,7 +106,7 @@ function Index() {
       </div>
       <header className="border-b border-line bg-background">
         <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5 py-4 md:px-10">
-          <a href="#inicio" className="min-w-0 text-xl font-black tracking-normal text-foreground sm:text-2xl" aria-label="Drop Moz, início">DROP<span className="text-primary">MOZ.</span></a>
+          <span className="min-w-0 text-sm font-extrabold uppercase tracking-[0.06em] text-foreground sm:text-base">Arbutin 7.0 + TXA 4.0</span>
           <nav className="hidden items-center gap-8 text-sm font-semibold text-muted-foreground md:flex" aria-label="Navegação principal">
             <a className="hover:text-primary" href="#beneficios">Benefícios</a><a className="hover:text-primary" href="#produto">O produto</a><a className="hover:text-primary" href="#video">Vídeo</a><a className="hover:text-primary" href="#duvidas">Dúvidas</a>
           </nav>
@@ -116,21 +116,19 @@ function Index() {
       </header>
 
       <section id="inicio" className="bg-blush">
-        <div className="mx-auto grid max-w-7xl items-center gap-0 lg:grid-cols-[1fr_0.9fr] lg:gap-16 lg:px-10">
-          <div className="px-6 pb-6 pt-9 sm:px-10 lg:order-1 lg:px-0 lg:py-20">
-            <span className="inline-flex items-center gap-2 border border-primary/20 bg-background px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-primary"><Sparkles className="size-3" /> Cuidado facial</span>
-            <h1 className="mt-5 max-w-xl font-display text-[38px] font-bold leading-[1.07] text-foreground sm:text-5xl lg:text-[64px]">Pele com aparência mais <span className="text-primary">uniforme e luminosa.</span></h1>
-            <p className="mt-5 max-w-lg text-sm leading-7 text-muted-foreground sm:text-base">Conheça o <strong className="font-semibold text-foreground">Arbutin 7.0 + TXA 4.0 Cream</strong>, um creme facial pensado para complementar a sua rotina de cuidados e ajudar a melhorar a aparência da pele.</p>
-            <div className="mt-7 flex flex-wrap items-end gap-x-4 gap-y-1 border-t border-line pt-5">
-              <div><p className="text-xs font-semibold uppercase text-muted-foreground">De <s>{formatPrice(previousPrice)}</s></p><p className="mt-1 text-[11px] font-extrabold uppercase tracking-[0.15em] text-primary">Por apenas</p><p className="text-[43px] font-black leading-none text-foreground sm:text-5xl">{formatPrice(price)}</p></div>
-              <span className="mb-1 bg-primary px-2.5 py-1 text-xs font-bold text-primary-foreground">Oferta especial</span>
-            </div>
-            <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-xs font-semibold text-foreground sm:text-sm"><span className="inline-flex items-center gap-2"><ShieldCheck className="size-4 text-primary" /> Pagamento na entrega</span><span className="inline-flex items-center gap-2"><Truck className="size-4 text-primary" /> Entrega grátis para cidade de Maputo e Matola</span></div>
+        <div className="relative h-[390px] w-full overflow-hidden sm:h-[520px] lg:h-[680px]">
+          <img src={productImage.url} alt="Mulher aplicando Arbutin 7.0 + TXA 4.0 Cream e mostrando a embalagem original" fetchPriority="high" className="h-full w-full object-cover object-[center_39%]" />
+          <div className="absolute bottom-4 left-4 bg-background/95 px-3 py-2 text-[11px] font-bold uppercase tracking-[0.1em] text-foreground shadow-sm sm:bottom-6 sm:left-6">Arbutin 7.0 + TXA 4.0 Cream <span className="text-primary">· 50 g</span></div>
+        </div>
+        <div className="mx-auto max-w-7xl px-6 pb-10 pt-9 sm:px-10 lg:pb-20">
+          <span className="inline-flex items-center gap-2 border border-primary/20 bg-background px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-primary"><Sparkles className="size-3" /> Cuidado facial</span>
+          <h1 className="mt-5 max-w-xl font-display text-[38px] font-bold leading-[1.07] text-foreground sm:text-5xl lg:text-[64px]">Pele com aparência mais <span className="text-primary">uniforme e luminosa.</span></h1>
+          <p className="mt-5 max-w-lg text-sm leading-7 text-muted-foreground sm:text-base">Conheça o <strong className="font-semibold text-foreground">Arbutin 7.0 + TXA 4.0 Cream</strong>, um creme facial pensado para complementar a sua rotina de cuidados e ajudar a melhorar a aparência da pele.</p>
+          <div className="mt-7 flex flex-wrap items-end gap-x-4 gap-y-1 border-t border-line pt-5">
+            <div><p className="text-xs font-semibold uppercase text-muted-foreground">De <s>{formatPrice(previousPrice)}</s></p><p className="mt-1 text-[11px] font-extrabold uppercase tracking-[0.15em] text-primary">Por apenas</p><p className="text-[43px] font-black leading-none text-foreground sm:text-5xl">{formatPrice(price)}</p></div>
+            <span className="mb-1 bg-primary px-2.5 py-1 text-xs font-bold text-primary-foreground">Oferta especial</span>
           </div>
-          <div className="relative h-[390px] w-full overflow-hidden sm:h-[520px] lg:order-2 lg:h-[680px]">
-            <img src={productImage.url} alt="Mulher aplicando Arbutin 7.0 + TXA 4.0 Cream e mostrando a embalagem original" fetchPriority="high" className="h-full w-full object-cover object-[center_39%]" />
-            <div className="absolute bottom-4 left-4 bg-background/95 px-3 py-2 text-[11px] font-bold uppercase tracking-[0.1em] text-foreground shadow-sm sm:bottom-6 sm:left-6">Arbutin 7.0 + TXA 4.0 Cream <span className="text-primary">· 50 g</span></div>
-          </div>
+          <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-xs font-semibold text-foreground sm:text-sm"><span className="inline-flex items-center gap-2"><ShieldCheck className="size-4 text-primary" /> Pagamento na entrega</span><span className="inline-flex items-center gap-2"><Truck className="size-4 text-primary" /> Entrega grátis para cidade de Maputo e Matola</span></div>
         </div>
       </section>
 
@@ -155,7 +153,7 @@ function Index() {
       <section className="px-6 py-16 sm:px-10 sm:py-24"><div className="mx-auto grid max-w-6xl gap-12 md:grid-cols-2 md:gap-20"><div><p className="text-xs font-bold uppercase tracking-[0.16em] text-primary">Para o dia a dia</p><h2 className="mt-3 text-3xl font-bold leading-tight sm:text-4xl">Sua pele merece cuidados especiais todos os dias.</h2><p className="mt-5 max-w-lg text-sm leading-7 text-muted-foreground sm:text-base">A rotina diária e diversos fatores do ambiente podem fazer com que a pele apresente uma aparência menos uniforme e luminosa. O Arbutin 7.0 + TXA 4.0 Cream pode ser incorporado à sua rotina de cuidados para ajudar a melhorar a aparência da pele.</p></div><div className="border-l-2 border-primary pl-6"><h3 className="text-lg font-bold">Ideal para quem:</h3><ul className="mt-5 space-y-4">{audience.map(item => <li key={item} className="flex items-start gap-3 text-sm leading-6"><Check className="mt-1 size-4 shrink-0 text-primary" />{item}</li>)}</ul></div></div></section>
 
       <section id="duvidas" className="border-t border-line bg-blush px-6 py-16 sm:px-10 sm:py-20"><div className="mx-auto max-w-6xl"><p className="text-xs font-bold uppercase tracking-[0.16em] text-primary">Informações úteis</p><h2 className="mt-3 text-3xl font-bold">Antes de pedir</h2><div className="mt-8 grid gap-3 md:grid-cols-3"><details className="group border border-line bg-background p-5"><summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-bold">Como usar? <ChevronDown className="size-4 shrink-0 transition-transform group-open:rotate-180" /></summary><p className="mt-4 text-sm leading-6 text-muted-foreground">Utilize o produto de acordo com as instruções presentes na embalagem.</p></details><details className="group border border-line bg-background p-5"><summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-bold">Como funciona o pagamento? <ChevronDown className="size-4 shrink-0 transition-transform group-open:rotate-180" /></summary><p className="mt-4 text-sm leading-6 text-muted-foreground">O pagamento é feito na entrega.</p></details><details className="group border border-line bg-background p-5"><summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-bold">Onde há entrega grátis? <ChevronDown className="size-4 shrink-0 transition-transform group-open:rotate-180" /></summary><p className="mt-4 text-sm leading-6 text-muted-foreground">A entrega grátis aplica-se somente à cidade de Maputo e Matola. Para outras localidades, as condições de entrega devem ser confirmadas antes do pedido.</p></details></div></div></section>
-      <footer className="border-t border-line px-6 py-8 text-center text-xs text-muted-foreground"><strong className="text-foreground">DROP<span className="text-primary">MOZ.</span></strong><p className="mt-2">Arbutin 7.0 + TXA 4.0 Cream · Cuidado facial</p></footer>
+      <footer className="border-t border-line px-6 py-8 text-center text-xs text-muted-foreground"><p className="text-sm font-bold text-foreground">Arbutin 7.0 + TXA 4.0 Cream · Cuidado facial</p></footer>
 
       <div className="fixed bottom-0 right-0 z-30 w-full border-t border-line bg-background/95 px-4 pb-[max(12px,env(safe-area-inset-bottom))] pt-3 shadow-[0_-8px_32px_-20px_var(--foreground)] backdrop-blur-md sm:bottom-5 sm:right-5 sm:w-auto sm:border sm:p-2">
         <Button size="lg" onClick={openCheckout} className="h-13 w-full gap-3 rounded-sm bg-primary px-6 text-sm font-extrabold uppercase tracking-[0.05em] text-primary-foreground shadow-lg hover:bg-primary/90 sm:w-auto"><ShoppingBag className="size-5" /> Pedir agora <ArrowRight className="size-4" /></Button>
