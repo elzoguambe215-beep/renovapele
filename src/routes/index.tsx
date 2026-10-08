@@ -27,9 +27,9 @@ const formatPrice = (amount: number) => new Intl.NumberFormat("pt-MZ").format(am
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Arbutin 7.0 + TXA 4.0 Cream | Drop Moz" },
+      { title: "Arbutin 7.0 + TXA 4.0 Cream" },
       { name: "description", content: "Conheça o Arbutin 7.0 + TXA 4.0 Cream, cuidado facial para a sua rotina. Peça por 897 MZN e pague na entrega. Entrega grátis na cidade de Maputo e Matola." },
-      { property: "og:title", content: "Arbutin 7.0 + TXA 4.0 Cream | Drop Moz" },
+      { property: "og:title", content: "Arbutin 7.0 + TXA 4.0 Cream" },
       { property: "og:description", content: "Cuidado facial para uma pele com aparência mais uniforme e luminosa. 897 MZN, pagamento na entrega." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -161,7 +161,7 @@ function Index() {
 
       {checkoutOpen && <div className="fixed inset-0 z-50 flex items-end justify-center bg-deep/70 sm:items-center sm:p-5" onMouseDown={(event) => { if (event.target === event.currentTarget) setCheckoutOpen(false); }}>
         <div role="dialog" aria-modal="true" aria-labelledby="checkout-title" className="max-h-[94dvh] w-full max-w-xl overflow-y-auto rounded-t-lg bg-background shadow-2xl sm:max-h-[90vh] sm:rounded-md">
-          <div className="sticky top-0 z-10 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 border-b border-line bg-background px-5 py-4 sm:px-7"><div className="min-w-0"><p className="text-[10px] font-bold uppercase tracking-[0.14em] text-primary">Drop Moz</p><h2 id="checkout-title" className="truncate text-xl font-bold">{orderSent ? "Pedido recebido" : "Finalize seu pedido"}</h2></div><Button variant="ghost" size="icon" className="shrink-0" aria-label="Fechar" onClick={() => setCheckoutOpen(false)}><X /></Button></div>
+          <div className="sticky top-0 z-10 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 border-b border-line bg-background px-5 py-4 sm:px-7"><div className="min-w-0"><h2 id="checkout-title" className="truncate text-xl font-bold">{orderSent ? "Pedido recebido" : "Finalize seu pedido"}</h2></div><Button variant="ghost" size="icon" className="shrink-0" aria-label="Fechar" onClick={() => setCheckoutOpen(false)}><X /></Button></div>
           {orderSent ? <div className="px-6 py-12 text-center sm:px-8"><div className="mx-auto flex size-14 items-center justify-center rounded-full bg-blush text-primary"><Check className="size-7" /></div><h3 className="mt-5 text-2xl font-bold">Pedido enviado com sucesso!</h3><p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-muted-foreground">Recebemos o seu pedido. O pagamento será feito na entrega.</p><Button className="mt-7 h-11 px-8" onClick={() => setCheckoutOpen(false)}>Continuar</Button></div> : <form onSubmit={submitOrder} className="space-y-5 px-5 py-6 sm:px-7">
             <div className="flex items-center justify-between border-b border-line pb-4"><div><p className="text-sm font-bold">Arbutin 7.0 + TXA 4.0 Cream</p><p className="text-xs text-muted-foreground">50 g · Pagamento na entrega</p></div><strong className="text-lg">{formatPrice(price * quantity)}</strong></div>
             <div className="grid gap-4 sm:grid-cols-2"><label className="block text-xs font-bold">Nome completo <input name="fullName" autoComplete="name" required minLength={2} maxLength={120} placeholder="O seu nome" className="mt-2 h-11 w-full rounded-sm border border-input bg-background px-3 text-sm font-normal outline-none focus:border-primary" /></label><label className="block text-xs font-bold">Telefone <input name="phone" type="tel" autoComplete="tel" inputMode="tel" required minLength={8} maxLength={30} placeholder="O seu número" className="mt-2 h-11 w-full rounded-sm border border-input bg-background px-3 text-sm font-normal outline-none focus:border-primary" /></label></div>
