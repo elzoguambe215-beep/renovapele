@@ -19,9 +19,9 @@ const esc = (s: string) =>
 export const sendOrderEmail = createServerFn({ method: "POST" })
   .inputValidator((data: unknown) => schema.parse(data))
   .handler(async ({ data }) => {
-    const apiKey = process.env.RESEND_API_KEY;
-    const to = process.env.ORDER_NOTIFY_EMAIL;
-    const from = process.env.RESEND_FROM_EMAIL || "Pedidos <onboarding@resend.dev>";
+    const apiKey = process.env['RESEND_API_KEY'];
+    const to = process.env['ORDER_NOTIFY_EMAIL'];
+    const from = process.env['RESEND_FROM_EMAIL'] || "Pedidos <onboarding@resend.dev>";
     if (!apiKey || !to) {
       console.error("Order email not configured: missing RESEND_API_KEY or ORDER_NOTIFY_EMAIL");
       return { ok: false as const };
