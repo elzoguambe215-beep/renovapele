@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
-const PRODUCT = "EELHOE 5 DAYS Tooth Powder";
+const PRODUCT = "TOSOWOONG Arbutin 7.0 + TXA 4.0 Cream";
 const UNIT_PRICE = 897;
 
 const schema = z.object({
