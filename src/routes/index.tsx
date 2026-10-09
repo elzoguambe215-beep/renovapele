@@ -40,18 +40,21 @@ export const Route = createFileRoute("/")({
 });
 
 function useCountdown() {
-  const [remaining, setRemaining] = useState(25 * 60);
+  const [remaining, setRemaining] = useState(30 * 60);
   useEffect(() => {
     const key = "dropmoz-arbutin-offer-end";
     const stored = Number(window.localStorage.getItem(key));
-    const end = stored > 0 ? stored : Date.now() + 25 * 60 * 1000;
-    if (!stored) window.localStorage.setItem(key, String(end));
+    const end = stored > Date.now() ? stored : Date.now() + 30 * 60 * 1000;
+    window.localStorage.setItem(key, String(end));
     const tick = () => setRemaining(Math.max(0, Math.ceil((end - Date.now()) / 1000)));
     tick();
     const interval = window.setInterval(tick, 1000);
     return () => window.clearInterval(interval);
   }, []);
-  return `${String(Math.floor(remaining / 60)).padStart(2, "0")}:${String(remaining % 60).padStart(2, "0")}`;
+  const h = String(Math.floor(remaining / 3600)).padStart(2, "0");
+  const m = String(Math.floor((remaining % 3600) / 60)).padStart(2, "0");
+  const s = String(remaining % 60).padStart(2, "0");
+  return `${h}:${m}:${s}`;
 }
 
 function Index() {
