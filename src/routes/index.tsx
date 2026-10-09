@@ -83,7 +83,6 @@ function Index() {
     const address = String(form.get("address") ?? "").trim();
     const city = String(form.get("city") ?? "").trim();
     const deliveryTime = String(form.get("deliveryTime") ?? "");
-    const notes = String(form.get("notes") ?? "").trim();
     if (fullName.length < 2 || phone.replace(/\D/g, "").length < 8 || address.length < 5 || city.length < 2) {
       setError("Confira o nome, telefone, endereço e localidade antes de continuar.");
       setPending(false);
@@ -93,7 +92,7 @@ function Index() {
       const result = await sendOrderEmail({ data: { fullName, phone, address, city, quantity, deliveryTime: deliveryTime as (typeof deliveryOptions)[number] } });
       if (!result.ok) throw new Error("email failed");
       await supabase.from("orders").insert({
-        full_name: fullName, phone, address, city, quantity, delivery_time: deliveryTime, notes,
+        full_name: fullName, phone, address, city, quantity, delivery_time: deliveryTime,
       });
       setOrderSent(true);
     } catch {
@@ -171,7 +170,6 @@ function Index() {
             <label className="block text-xs font-bold">Endereço <input name="address" autoComplete="street-address" required minLength={5} maxLength={300} placeholder="Rua, casa, bairro" className="mt-2 h-11 w-full rounded-sm border border-input bg-background px-3 text-sm font-normal outline-none focus:border-primary" /></label>
             <label className="block text-xs font-bold">Cidade/Localidade <input name="city" autoComplete="address-level2" required minLength={2} maxLength={100} placeholder="Ex.: Maputo, Matola" className="mt-2 h-11 w-full rounded-sm border border-input bg-background px-3 text-sm font-normal outline-none focus:border-primary" /></label>
             <div className="grid gap-4 sm:grid-cols-2"><div><span className="text-xs font-bold">Quantidade</span><div className="mt-2 inline-flex h-11 items-center border border-input"><Button type="button" variant="ghost" size="icon" aria-label="Diminuir quantidade" disabled={quantity <= 1} onClick={() => setQuantity(Math.max(1, quantity - 1))}><Minus className="size-4" /></Button><span className="w-10 text-center text-sm font-semibold">{quantity}</span><Button type="button" variant="ghost" size="icon" aria-label="Aumentar quantidade" disabled={quantity >= 9} onClick={() => setQuantity(Math.min(9, quantity + 1))}><Plus className="size-4" /></Button></div></div><label className="block text-xs font-bold">Horário de entrega <select name="deliveryTime" className="mt-2 h-11 w-full rounded-sm border border-input bg-background px-3 text-sm font-normal outline-none focus:border-primary">{deliveryOptions.map(option => <option key={option} value={option}>{option}</option>)}</select></label></div>
-            <label className="block text-xs font-bold">Observações <span className="font-normal text-muted-foreground">(opcional)</span><textarea name="notes" rows={2} maxLength={1000} placeholder="Referência ou instruções para a entrega" className="mt-2 w-full resize-y rounded-sm border border-input bg-background p-3 text-sm font-normal outline-none focus:border-primary" /></label>
             <p className="text-xs leading-5 text-muted-foreground">Entrega grátis somente na cidade de Maputo e Matola. Para outras localidades, confirme as condições de entrega antes de concluir.</p>
             {error && <p role="alert" className="text-sm font-semibold text-destructive">{error}</p>}
             <Button type="submit" disabled={pending} className="h-12 w-full rounded-sm bg-primary text-sm font-extrabold text-primary-foreground hover:bg-primary/90">{pending ? "A enviar..." : `Confirmar pedido · ${formatPrice(price * quantity)}`}</Button>
